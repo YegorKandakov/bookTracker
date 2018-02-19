@@ -16,7 +16,13 @@ export const login = credentials => dispatch =>
     dispatch(userLoggedIn(user));
   });
 
-export const logout = () => dispatch =>{
-    localStorage.removeItem('bookTrackerJWT');
-    dispatch(userLoggedOut());
-  };
+export const logout = () => dispatch => {
+  localStorage.removeItem("bookTrackerJWT");
+  dispatch(userLoggedOut());
+};
+
+export const confirm = token => dispatch =>
+  api.user.confirm(token).then(user => {
+    localStorage.bookTrackerJWT = user.token;
+    dispatch(userLoggedIn(user));
+  });
